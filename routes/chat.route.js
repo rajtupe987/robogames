@@ -69,7 +69,7 @@ chatRouter.patch("/count", async (req, res) => {
   chatRouter.get("/get/:id",async(req,res)=>{
     let id = req.params.id
     try {
-      const data = await CountModel.findById({userID:id})
+      const data = await CountModel.findOne({userID:id})
       res.send({"data":data}) 
     } catch (error) {
       res.send({"msg":"user not found"})
