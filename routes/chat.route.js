@@ -2,6 +2,8 @@ const express = require('express')
 require("dotenv").config()
 const chatRouter = express.Router()
 
+const{CountModel}=require('../models/questionCount.model')
+
 const { Configuration, OpenAIApi } = require('openai');
 
 const config = new Configuration({
@@ -40,6 +42,29 @@ chatRouter.post('/chat', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+
+chatRouter.patch("/count", async (req, res) => {
+    const AttempedQuestion = req.body.AttempedQuestion;
+    const user = req.body.user;
+  
+    try {
+      const data = await CountModel.findOne({ user: user });
+  
+      if (data) {
+        // User found, update count
+        await CountModel.updateOne({ user: user }, { count: AttempedQuestion });
+        res.status(200).json({ message: "Count updated successfully." });
+      } else {
+        // User not found, create new document
+        const newCount = new CountModel({ user: user, count: AttempedQuestion });
+        await newCount.save();
+        res.status(200).json({ message: "New count document created." });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Error updating count." });
+    }
+  });
 
 module.exports={chatRouter}
 

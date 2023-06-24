@@ -11,7 +11,7 @@ const authMiddleWare = async(req,res,next)=>{
         if(!user){
             return res.status(401).json({message:"User not found",ok:false})
         }
-        req.user = user;
+        req.body.user = user._id;
         next()
     } catch (error) {
         return res.status(401).json({message:error.message})
