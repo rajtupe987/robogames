@@ -27,10 +27,13 @@ userRoute.post("/register", async (req, res) => {
   }
   bcrypt.hash(pass, 5, async (err, hash) => {
     try {
-      const data = new UserModel({ name, email, pass: hash });
-      await data.save();
-      res.status(200).json({ "ok": true, "msg": "Registered Successfully" });
-
+      if(err){
+        res.send(err.message)
+      }else{
+        const data = new UserModel({ name, email, pass: hash });
+        await data.save();
+        res.status(200).json({ "ok": true, "msg": "Registered Successfully" });
+      }
     } catch (error) {
       res.status(400).json({ "ok": false, "msg": error.message });
     }
