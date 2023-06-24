@@ -49,7 +49,7 @@ chatRouter.patch("/count", async (req, res) => {
     const user = req.body.user;
   
     try {
-      const data = await CountModel.findOne({ user: user });
+      const data = await CountModel.findOne({ userID: user });
   
       if (data) {
         // User found, update count
