@@ -53,11 +53,11 @@ chatRouter.patch("/count", async (req, res) => {
   
       if (data) {
         // User found, update count
-        await CountModel.updateOne({ user: user }, { count: AttempedQuestion });
+        await CountModel.updateOne({ userID: user }, { count: AttempedQuestion });
         res.status(200).json({ message: "Count updated successfully." });
       } else {
         // User not found, create new document
-        const newCount = new CountModel({ user: user, count: AttempedQuestion });
+        const newCount = new CountModel({count: AttempedQuestion, userID:user });
         await newCount.save();
         res.status(200).json({ message: "New count document created." });
       }
