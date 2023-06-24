@@ -7,13 +7,14 @@ const cors = require("cors");
 require("dotenv").config();
 const app = express();
 
-app.use(
-  cors({
-    origin: ['http://127.0.0.1:5500', 'null'],
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type'],
-  })
-);
+app.use(cors());
+// app.use(
+//   cors({
+//     origin: ['http://127.0.0.1:5500', 'null'],
+//     methods: ['GET', 'POST'],
+//     allowedHeaders: ['Content-Type'],
+//   })
+// );
 
 app.use(express.json());
 
