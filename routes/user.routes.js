@@ -45,7 +45,7 @@ userRoute.post("/register", async (req, res) => {
 userRoute.post("/login", async (req, res) => {
   try {
     const { email, pass } = req.body;
-    const user = await UserModel.findOne({ email });
+    const user = await UserModel.findOne({ email:email });
     if (!user) {
       return res.status(401).json({ msg: "User with this email not found", ok: false })
     }
